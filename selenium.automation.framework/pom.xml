@@ -20,19 +20,36 @@
   <dependencies>
 
     <dependency>
+      <groupId>com.aventstack</groupId>
+      <artifactId>extentreports</artifactId>
+      <version>5.1.2</version>
+    </dependency>
+
+
+    <!-- apache POI -->
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-ooxml</artifactId>
+        <version>5.4.1</version>
+    </dependency>
+
+    <!-- Maven Surefire Plugin -->
+    <dependency>
       <groupId>org.apache.maven.surefire</groupId>
       <artifactId>surefire</artifactId>
       <version>3.5.4</version>
       <type>pom</type>
     </dependency>
 
-
+    <!-- TestNG -->
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
       <version>7.11.0</version>
       <scope>test</scope>
     </dependency>
+
+    <!-- Selenium Java -->
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
@@ -40,6 +57,7 @@
     </dependency>
   </dependencies>
 
+  <!--  -->
   <build>
     <plugins>
       <!-- Maven Clean Plugin - Automatically clean test-output folder -->
@@ -90,4 +108,28 @@
       </plugin> -->
     </plugins>
   </build>
+
+
+  <dependencyManagement>
+  
+
+    <dependencies>
+
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>2.16.1</version>
+      </dependency>
+
+    
+      <!-- commons-codec -->
+      <dependency>
+        <groupId>commons-codec</groupId>
+        <artifactId>commons-codec</artifactId>
+        <version>1.17.1</version>
+      </dependency>
+
+    </dependencies>
+
+  </dependencyManagement>
 </project>

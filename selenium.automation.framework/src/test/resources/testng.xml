@@ -10,22 +10,7 @@
     <!-- Login Tests -->
     <test name="Login Test Suite" preserve-order="true">
         <classes>
-            <class name="selenium.automation.framework.tests.LoginTests"/>
+            <class name="selenium.automation.framework.tests.SignUp.TestCase01"/>
         </classes>
     </test>
-    
-    <!-- Home Page Tests -->
-    <test name="Home Page Test Suite" preserve-order="true">
-        <classes>
-            <class name="selenium.automation.framework.tests.HomePageTests"/>
-        </classes>
-    </test>
-    
-    <!-- Sample Tests -->
-    <test name="Sample Tests" preserve-order="true">
-        <classes>
-            <class name="selenium.automation.framework.test"/>
-        </classes>
-    </test>
-    
 </suite>
