@@ -1,16 +1,20 @@
 package selenium.automation.framework.tests;
 
+import java.lang.reflect.Method;
+
 import org.openqa.selenium.WebDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
-import com.aventstack.extentreports.ExtentReports;
-import selenium.automation.framework.utils.SetupExtentReport;
+import com.aventstack.extentreports.ExtentTest;
+
+import selenium.automation.framework.utils.SetupExtentReportUtil;
 import selenium.automation.framework.utils.WebdriverUtil;
 
-public class BaseTest extends SetupExtentReport {
+public class BaseTest extends SetupExtentReportUtil {
     protected WebDriver driver;
     
 
@@ -22,12 +26,25 @@ public class BaseTest extends SetupExtentReport {
         
     }
     @BeforeMethod
-    public void beforeMethod() {
+    public void beforeMethod(Method method) {
         // Code to run before each test method
        driver = WebdriverUtil.initializeDriver("chrome");
+        // getTest() = extent.
+       createTest(method.getName());
+        // Log WebDriver initialization info
+        getTest().info("WebDriver initialized for test: " + method.getName());    
     }
     @AfterMethod
-    public void afterMethod() {
+    public void afterMethod(ITestResult result) {
+        ExtentTest test = getTest();
+        
+         if (result.getStatus() == ITestResult.FAILURE) {
+            test.fail(result.getThrowable());
+        } else if (result.getStatus() == ITestResult.SUCCESS) {
+            test.pass("Test passed");
+        } else {
+            test.skip("Test skipped");
+        }
         // Code to run after each test method
         WebdriverUtil.quitDriver();
     }

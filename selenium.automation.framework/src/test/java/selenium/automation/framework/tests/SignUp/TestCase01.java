@@ -11,7 +11,7 @@ public class TestCase01 extends BaseTest {
     public void TC01() {
         System.out.println("Executing TestCase01");
         driver.get("https://www.google.com");
-        extentTest.info("Navigated to Google");
-        extentTest.pass("TestCase01 Passed");
+        getTest().info("Navigated to Google homepage");
+        getTest().pass("TestCase01 Passed");
     }
 }
