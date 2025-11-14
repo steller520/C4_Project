@@ -1,6 +1,0 @@
-selenium\automation\framework\utils\WebdriverUtil.class
-selenium\automation\framework\utils\SetupExtentReport.class
-selenium\automation\framework\tests\SignUp\TestCase01.class
-selenium\automation\framework\runners\TestNGRunner.class
-selenium\automation\framework\tests\BaseTest.class
-selenium\automation\framework\listeners\TestListener.class
