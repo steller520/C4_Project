@@ -8,9 +8,8 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.testng.ITestListener;
 
-public class ScreenShotUtil implements ITestListener {
+public class ScreenShotUtil  {
     public static String takeScreenshot(WebDriver driver, String screenshotName) throws IOException {
         // Placeholder for screenshot capture logic
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());

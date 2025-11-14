@@ -1,4 +1,4 @@
-package selenium.automation.framework.utils;
+package selenium.automation.framework.core;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -17,6 +17,8 @@ public class WebdriverUtil {
                 driver = new FirefoxDriver();
                 break;
             default:
+                System.out.println("Unsupported browser type! Defaulting to Chrome.");
+                driver = new ChromeDriver();
                 break;
         }
         return driver;

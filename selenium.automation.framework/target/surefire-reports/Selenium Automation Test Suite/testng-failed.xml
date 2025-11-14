@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite thread-count="1" name="Failed suite [Selenium Automation Test Suite]" guice-stage="DEVELOPMENT" verbose="0">
+  <parameter name="browser" value="chrome"/>
+  <listeners>
+    <listener class-name="selenium.automation.framework.listeners.TestListener"/>
+  </listeners>
+  <test thread-count="1" name="Sign Up Test Suite(failed)" verbose="0">
+    <parameter name="name" value="John Doe"/>
+    <parameter name="email" value="john.doe@example.com"/>
+    <classes>
+      <class name="selenium.automation.framework.tests.SignUp.TestCase01">
+        <methods>
+          <include name="TC01"/>
+          <include name="afterMethod"/>
+          <include name="afterSuite"/>
+          <include name="beforeSuite"/>
+          <include name="beforeMethod"/>
+        </methods>
+      </class> <!-- selenium.automation.framework.tests.SignUp.TestCase01 -->
+    </classes>
+  </test> <!-- Sign Up Test Suite(failed) -->
+</suite> <!-- Failed suite [Selenium Automation Test Suite] -->

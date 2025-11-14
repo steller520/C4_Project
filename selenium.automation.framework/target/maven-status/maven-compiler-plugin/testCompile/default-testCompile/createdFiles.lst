@@ -1,0 +1,8 @@
+selenium\automation\framework\tests\SignUp\TestCase03.class
+selenium\automation\framework\tests\SignUp\TestCase01.class
+selenium\automation\framework\runners\TestNGRunner.class
+selenium\automation\framework\utils\ScreenShotUtil.class
+selenium\automation\framework\tests\SignUp\TestCase02.class
+selenium\automation\framework\utils\SetupExtentReportUtil.class
+selenium\automation\framework\tests\BaseTest.class
+selenium\automation\framework\listeners\TestListener.class
