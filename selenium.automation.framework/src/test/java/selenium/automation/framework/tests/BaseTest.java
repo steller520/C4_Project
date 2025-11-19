@@ -1,12 +1,14 @@
 package selenium.automation.framework.tests;
 
 import java.lang.reflect.Method;
+import java.time.Duration;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Optional;
@@ -19,8 +21,8 @@ import selenium.automation.framework.utils.ScreenShotUtil;
 import selenium.automation.framework.utils.SetupExtentReportUtil;
 
 public class BaseTest extends SetupExtentReportUtil {
-    protected WebDriver driver;
-    WebDriverWait wait;
+    // Removed driver field - use WebdriverUtil.getDriver() instead for thread safety
+    
 
     @BeforeSuite
     public void beforeSuite() {
@@ -30,6 +32,7 @@ public class BaseTest extends SetupExtentReportUtil {
 
     }
 
+
     @BeforeMethod
     @Parameters("browser")
     public void beforeMethod(Method method, @Optional("chrome") String browser) {
@@ -37,21 +40,36 @@ public class BaseTest extends SetupExtentReportUtil {
         try {
             // Check system property first (for Maven -Dbrowser=xxx)
             String browserToUse = System.getProperty("browser", browser);
-            driver = WebdriverUtil.initializeDriver(browserToUse);
+            WebdriverUtil.initializeDriver(browserToUse);
             System.out.println("Browser initialized: " + browserToUse);
+            WebdriverUtil.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            // Set waits after driver is created
         } catch (Exception e) {
             System.out.println("Error initializing browser: " + e.getMessage());
-        }
+        }   
+    }
 
-        // getTest() = extent.
-        createTest(method.getName());
-        // Log WebDriver initialization info
-        getTest().info("WebDriver initialized for test: " + method.getName());
+    @BeforeClass
+    public void beforeClass() {
+        // Code to run before each class
+        System.out.println("");
+        
+    }
+
+    @AfterClass
+    public void afterClass() {
+        // Code to run after each class
+        System.out.println("");
+        WebDriver driver = WebdriverUtil.getDriver();
+        if (driver != null) {
+            driver.close();
+        }
     }
 
     @AfterMethod
     public void afterMethod(ITestResult result, Method method) {
         ExtentTest test = getTest();
+        WebDriver driver = WebdriverUtil.getDriver();
 
         if (result.getStatus() == ITestResult.FAILURE) {
             test.fail(result.getThrowable());
@@ -86,13 +104,8 @@ public class BaseTest extends SetupExtentReportUtil {
         } else {
             test.skip("Test skipped");
         }
-        // Code to run after each test method
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        WebdriverUtil.quitDriver();
+        // Quit driver after each test method
+        WebdriverUtil.getDriver().close();
     }
 
     @AfterSuite

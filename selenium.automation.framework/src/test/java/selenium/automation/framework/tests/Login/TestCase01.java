@@ -1,4 +1,4 @@
-package selenium.automation.framework.tests.SignUp;
+package selenium.automation.framework.tests.Login;
 
 import java.io.IOException;
 
@@ -9,14 +9,13 @@ import selenium.automation.framework.core.WebdriverUtil;
 import selenium.automation.framework.pages.HomePage;
 import selenium.automation.framework.tests.BaseTest;
 
-public class TestCase01 extends BaseTest {
+public class TestCase01  extends BaseTest {
 
-    // Test Case 01: Verify Navigation to Signup/Login Page
     @Test
     public void TC01() throws IOException {
         // ScreenShotUtil.takeScreenshot(driver, "TC01_BeforeNavigation");
-        createTest("REG-01");
-        getTest().info("WebDriver initialized for test: " + "REG-01");
+        createTest("LOGIN-01");
+        getTest().info("WebDriver initialized for test: " + "LOGIN-01");
         System.out.println("Executing TestCase01");
         WebDriver driver = WebdriverUtil.getDriver();
         HomePage homePage = new HomePage(driver);
@@ -34,4 +33,5 @@ public class TestCase01 extends BaseTest {
         
         
     }
+
 }

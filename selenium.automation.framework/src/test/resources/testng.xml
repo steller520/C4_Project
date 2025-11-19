@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Selenium Automation Test Suite" verbose="1" parallel="false" thread-count="1">
+<suite name="Selenium Automation Test Suite" verbose="1" parallel="test" thread-count="2">
     
     <!-- Global parameters -->
-    <parameter name="browser" value="chrome"/>
+    <parameter name="browser" value="chrome"/>\
+    <parameter name="email" value="john.doe+test1@example.com"/>
+    <parameter name="password" value="Passw0rd!"/>
     
     <!-- Listeners for custom reporting and logging -->
     <listeners>
@@ -11,15 +13,49 @@
     </listeners>
     
     <!-- Login Tests -->
-    <test name="Sign Up Test Suite" preserve-order="true">
+    <test name="Sign Up Test Suite" preserve-order="true" parallel="methods" thread-count="3">
         
-        <parameter name="name" value="John Doe"/>
-        <parameter name="email" value="john.doe@example.com"/>
+        
+        <parameter name="sheetName" value="Registrations"/>
          
         <classes>
             <class name="selenium.automation.framework.tests.SignUp.TestCase01"/>
             <class name="selenium.automation.framework.tests.SignUp.TestCase02"/>
             <class  name="selenium.automation.framework.tests.SignUp.TestCase03"/>
+        </classes>
+    </test>
+    <test name="Login Test Suite" preserve-order="true" parallel="methods" thread-count="3">
+        <parameter name="sheetName" value="Login"/>
+        
+        <classes>
+            <class name="selenium.automation.framework.tests.Login.TestCase01"/>
+            <class name="selenium.automation.framework.tests.Login.TestCase02"/>
+            <class  name="selenium.automation.framework.tests.Login.TestCase03"/>
+        </classes>
+        
+    </test>
+    <test name="Product Test Suite" preserve-order="true" parallel="methods" thread-count="2">
+        <parameter name="sheetName" value="Cart"/>
+        <classes>
+            <class name="selenium.automation.framework.tests.Cart.TestCase01"/>
+            <class name="selenium.automation.framework.tests.Cart.TestCase02" />
+            <class name="selenium.automation.framework.tests.Cart.TestCase03" />
+            <class name="selenium.automation.framework.tests.Cart.TestCase04" />
+            <class name="selenium.automation.framework.tests.Cart.TestCase05" />
+            <class name="selenium.automation.framework.tests.Cart.TestCase06" />
+            <class name="selenium.automation.framework.tests.Cart.TestCase07" />
+        </classes>
+    </test>
+    
+    <test name="Checkout Test Suite" preserve-order="true" parallel="methods" thread-count="2">
+        <parameter name="sheetName" value="Checkout"/>
+        <parameter name="email" value="john.doe+test1@example.com"/>
+        <parameter name="password" value="Passw0rd!"/>
+        <classes>
+            <class name="selenium.automation.framework.tests.Checkout.TestCase01"/>
+            <class name="selenium.automation.framework.tests.Checkout.TestCase02" />
+            <class name="selenium.automation.framework.tests.Checkout.TestCase03" />
+            <class name="selenium.automation.framework.tests.Checkout.TestCase04" />
         </classes>
     </test>
 </suite>
