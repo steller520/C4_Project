@@ -13,14 +13,28 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 
+/**
+ * Utility for extracting structured test data from Excel workbook on classpath.
+ * Supports multiple sheet models ("Registrations", "Login") with defensive fallbacks.
+ * Provides TestNG @DataProvider integration for parameterized tests.
+ */
 public class ExcelExtractorUtil {
 
+    /**
+     * TestNG DataProvider delegating to extractData using sheetName parameter from XML.
+     */
     @DataProvider(name = "excelDataProvider")
     public static Object[][] excelDataProvider(ITestContext context) {
         String sheet = context.getCurrentXmlTest().getParameter("sheetName");
         return extractData(sheet);
     }
 
+    /**
+     * Extracts rows for given sheet name mapping each row to Object[] of column values.
+     * Skips header row; ignores blank test case names; supplies default rows on error.
+     * @param sheetName target sheet (e.g., Registrations, Login)
+     * @return two-dimensional Object array for DataProvider consumption
+     */
     public static Object[][] extractData(String sheetName) {
         List<Object[]> rows = new ArrayList<>();
         DataFormatter formatter = new DataFormatter();
@@ -29,6 +43,9 @@ public class ExcelExtractorUtil {
                 throw new IllegalStateException("Resource testData.xlsx not found on classpath");
             }
             Workbook workbook = WorkbookFactory.create(in);
+            //  for testing remove afterwards
+            // sheetName = sheetName != null ? sheetName : "Registrations";
+
             if ("Registrations".equalsIgnoreCase(sheetName)){
 
                 Sheet sheet = workbook.getSheet(sheetName);

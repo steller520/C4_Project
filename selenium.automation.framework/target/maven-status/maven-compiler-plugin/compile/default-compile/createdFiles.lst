@@ -1,0 +1,9 @@
+selenium\automation\framework\pages\CheckOutPage.class
+selenium\automation\framework\pages\LoginPage.class
+selenium\automation\framework\core\CleanUpRegistered.class
+selenium\automation\framework\core\WebdriverUtil.class
+selenium\automation\framework\core\ConfigManager.class
+selenium\automation\framework\pages\CartPage.class
+selenium\automation\framework\pages\ProductsPage.class
+selenium\automation\framework\pages\HomePage.class
+selenium\automation\framework\pages\SignupPage.class

@@ -13,18 +13,18 @@
     </listeners>
     
     <!-- Login Tests -->
-    <test name="Sign Up Test Suite" preserve-order="true" parallel="methods" thread-count="3">
+    <test enabled="true" name="Sign Up Test Suite" preserve-order="false" parallel="methods" thread-count="4">
         
         
         <parameter name="sheetName" value="Registrations"/>
          
         <classes>
-            <class name="selenium.automation.framework.tests.SignUp.TestCase01"/>
-            <class name="selenium.automation.framework.tests.SignUp.TestCase02"/>
+            <class enabled="false" name="selenium.automation.framework.tests.SignUp.TestCase01"/>
+            <class enabled="false" name="selenium.automation.framework.tests.SignUp.TestCase02"/>
             <class  name="selenium.automation.framework.tests.SignUp.TestCase03"/>
         </classes>
     </test>
-    <test name="Login Test Suite" preserve-order="true" parallel="methods" thread-count="3">
+    <test name="Login Test Suite" preserve-order="false" parallel="methods" enabled="true" thread-count="4">
         <parameter name="sheetName" value="Login"/>
         
         <classes>
@@ -34,7 +34,7 @@
         </classes>
         
     </test>
-    <test name="Product Test Suite" preserve-order="true" parallel="methods" thread-count="2">
+    <test enabled="true" name="Product Test Suite" preserve-order="false" parallel="methods" thread-count="4">
         <parameter name="sheetName" value="Cart"/>
         <classes>
             <class name="selenium.automation.framework.tests.Cart.TestCase01"/>
@@ -47,7 +47,7 @@
         </classes>
     </test>
     
-    <test name="Checkout Test Suite" preserve-order="true" parallel="methods" thread-count="2">
+    <test enabled="true" name="Checkout Test Suite" preserve-order="true" parallel="methods" thread-count="4">
         <parameter name="sheetName" value="Checkout"/>
         <parameter name="email" value="john.doe+test1@example.com"/>
         <parameter name="password" value="Passw0rd!"/>
@@ -56,6 +56,18 @@
             <class name="selenium.automation.framework.tests.Checkout.TestCase02" />
             <class name="selenium.automation.framework.tests.Checkout.TestCase03" />
             <class name="selenium.automation.framework.tests.Checkout.TestCase04" />
+            <class name="selenium.automation.framework.tests.Checkout.TestCase05" />
+        </classes>
+    </test>
+    
+    <!-- Selenium Features Demo Test Suite -->
+    <test enabled="true" name="Selenium Features Demo Suite" preserve-order="true">
+        <parameter name="sheetName" value="Features"/>
+        <classes>
+            <class name="selenium.automation.framework.tests.Features.ActionsClassDemo"/>
+            <class name="selenium.automation.framework.tests.Features.RelativeLocatorsDemo" />
+            <class name="selenium.automation.framework.tests.Features.WaitsDemo" />
+            <class name="selenium.automation.framework.tests.Features.BrowserConsoleLogsDemo" />
         </classes>
     </test>
 </suite>

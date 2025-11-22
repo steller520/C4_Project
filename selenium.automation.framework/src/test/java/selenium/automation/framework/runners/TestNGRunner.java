@@ -9,6 +9,11 @@ import java.util.List;
  * TestNG Suite Runner
  * This class allows you to run TestNG suites programmatically
  */
+/**
+ * Programmatic TestNG suite runner allowing invocation without IDE/TestNG plugin.
+ * Supports default testng.xml path plus overloaded method for custom parameters.
+ */
+@SuppressWarnings("null")
 public class TestNGRunner {
 
     public static void main(String[] args) {
@@ -16,9 +21,7 @@ public class TestNGRunner {
         runner.runTestNGSuite();
     }
 
-    /**
-     * Run TestNG suite from testng.xml file
-     */
+    /** Run default test suite from canonical testng.xml path. */
     public void runTestNGSuite() {
         TestNG testNG = new TestNG();
         
@@ -52,9 +55,9 @@ public class TestNGRunner {
     }
 
     /**
-     * Run TestNG suite with custom parameters
-     * @param xmlPath Path to testng.xml file
-     * @param outputDir Output directory for reports
+     * Run suite pointing to provided xml and custom output directory.
+     * @param xmlPath path to testng descriptor
+     * @param outputDir folder for generated reports
      */
     public void runTestNGSuite(String xmlPath, String outputDir) {
         TestNG testNG = new TestNG();

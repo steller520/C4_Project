@@ -20,15 +20,24 @@ import selenium.automation.framework.core.WebdriverUtil;
 import selenium.automation.framework.utils.ScreenShotUtil;
 import selenium.automation.framework.utils.SetupExtentReportUtil;
 
+/**
+ * Abstract base class for TestNG test classes.
+ * Provides lifecycle hooks for driver initialization, screenshot capture, and Extent reporting.
+ * Design choices:
+ *  - ThreadLocal driver obtained via WebdriverUtil for parallel safety.
+ *  - Screenshots captured on both PASS and FAIL to aid visual auditing.
+ *  - Uses @Parameters browser with system property override (-Dbrowser) for CI flexibility.
+ */
+@SuppressWarnings("null")
 public class BaseTest extends SetupExtentReportUtil {
-    // Removed driver field - use WebdriverUtil.getDriver() instead for thread safety
-    
+    // No WebDriver field; access via WebdriverUtil.getDriver() for thread isolation
 
     @BeforeSuite
     public void beforeSuite() {
-        // Code to run before the entire test suite
+        // Suite-wide setup: initialize reporting
         System.out.println("Starting Test Suite Execution");
         setupReport();
+    
 
     }
 
@@ -36,7 +45,7 @@ public class BaseTest extends SetupExtentReportUtil {
     @BeforeMethod
     @Parameters("browser")
     public void beforeMethod(Method method, @Optional("chrome") String browser) {
-        // Code to run before each test method
+        // Per-test setup: create driver, apply implicit wait baseline
         try {
             // Check system property first (for Maven -Dbrowser=xxx)
             String browserToUse = System.getProperty("browser", browser);
@@ -51,18 +60,30 @@ public class BaseTest extends SetupExtentReportUtil {
 
     @BeforeClass
     public void beforeClass() {
-        // Code to run before each class
+        // Placeholder for class-level setup (e.g., shared data fixtures)
         System.out.println("");
         
     }
 
     @AfterClass
     public void afterClass() {
-        // Code to run after each class
+        // Attempt graceful driver close (not quit) to allow @AfterMethod cleanup patterns
         System.out.println("");
-        WebDriver driver = WebdriverUtil.getDriver();
-        if (driver != null) {
-            driver.close();
+        try {
+            WebDriver driver = WebdriverUtil.getDriver();
+            if (driver != null) {
+                // Check if session is still valid before trying to close
+                try {
+                    driver.getTitle(); // This will throw exception if session is invalid
+                    driver.close();
+                } catch (org.openqa.selenium.NoSuchSessionException e) {
+                    System.out.println("Browser session already closed");
+                } catch (Exception e) {
+                    System.out.println("Error checking browser session: " + e.getMessage());
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error in afterClass cleanup: " + e.getMessage());
         }
     }
 
@@ -104,14 +125,20 @@ public class BaseTest extends SetupExtentReportUtil {
         } else {
             test.skip("Test skipped");
         }
-        // Quit driver after each test method
-        WebdriverUtil.getDriver().close();
+        // Close window after each test to free resources (quit handled if needed elsewhere)
+        try {
+            driver.close();
+        } catch (Exception e) {
+            test.warning("Driver close encountered issue: " + e.getMessage());
+        }
     }
 
-    @AfterSuite
+    @AfterSuite(alwaysRun = true)
     public void afterSuite() {
-        // Code to run after the entire test suite
+        // Suite teardown: flush report
         System.out.println("Test Suite Execution Completed");
+        System.out.println("Flushing Extent Report...");
         flushReport();
+        System.out.println("Extent Report flushed successfully!");
     }
 }

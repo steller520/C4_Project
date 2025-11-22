@@ -4,55 +4,72 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.Duration;
 
 import selenium.automation.framework.core.ConfigManager;
 
-;
-
+/**
+ * Page Object for application Home page.
+ * Provides navigation entry points to major flows: login/signup, products, cart, delete account.
+ * Simplicity retained: each method performs direct single action with logging.
+ */
+@SuppressWarnings("null")
 public class HomePage {
-    // WebDriver instance
+    private static final Logger logger = LoggerFactory.getLogger(HomePage.class);
+    /** Driver session */
     WebDriver driver;
-    // Locators
+    // Primary navigation locators
     private By signupLoginLink = By.xpath("//a[@href=\"/login\"]");
     private By productslink = By.partialLinkText("Products");
     private By cartLink = By.xpath("//a[@href=\"/view_cart\"]");
     private By deleteAccountLink = By.partialLinkText("Delete");
 
-
-    // URL of the homepage
+    /** Base URL for home */
     private String HomePageUrl = ConfigManager.getProperty("HomePageURL");
 
-    // Constructor to initialize WebDriver and open the homepage
+    /** Constructs without navigation. */
     public HomePage(WebDriver driver) {
         this.driver = driver;
-        
+        logger.info("HomePage initialized");
     }
 
-    // Method to open the homepage
+    /** Opens home page and maximizes window. */
     public void openHomePage() {
+        logger.info("Navigating to HomePage: {}", HomePageUrl);
         driver.get(HomePageUrl);
         driver.manage().window().maximize();
+        logger.info("HomePage opened and window maximized");
     }
 
-    // Method to click on Signup/Login link
+    /** Clicks signup/login link. Returns displayed state post-click for assertion. */
     public boolean clickSignupLogin() {
+        logger.info("Clicking on Signup/Login link");
         driver.findElement(signupLoginLink).click();
-        return driver.findElement(signupLoginLink).isDisplayed();
-        
+        boolean isDisplayed = driver.findElement(signupLoginLink).isDisplayed();
+        logger.info("Signup/Login link clicked, displayed: {}", isDisplayed);
+        return isDisplayed;
     }
-    // Method to click on Products link
+    
+    /** Clicks products link. Returns enabled state for assertion. */
     public boolean clickProducts() {
+        logger.info("Clicking on Products link");
         driver.findElement(productslink).click();
-        return driver.findElement(productslink).isEnabled();
+        boolean isEnabled = driver.findElement(productslink).isEnabled();
+        logger.info("Products link clicked, enabled: {}", isEnabled);
+        return isEnabled;
     }
-    // Method to click on Cart link
+    
+    /** Navigates to cart page via header link. */
     public void clickCart() {
+        logger.info("Clicking on Cart link");
         driver.findElement(cartLink).click();
+        logger.info("Cart link clicked successfully");
     }
-    // Method to click on Delete Account link
+    /** Clicks delete account link using explicit wait for stability. */
     public void clickDeleteAccount() {
-        // Wait briefly for the Delete link to be present/clickable to avoid flakiness
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(deleteAccountLink)).click();
     }
